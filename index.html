@@ -1,13 +1,14 @@
 <html>
 
     <head>
+        <meta charset="utf-8">
         <script type="text/javascript" src="hex_hmac_sha1.js"></script>
         <script type="text/javascript" src="hex_md5.js"></script>
     </head>
     
     <body>
         <div>
-            <h3>填入设备信息：</h3>
+            <h3>阿里云三元组:</h3>
             productKey:<input type="text" id="productKey" name="productKey"></input><br/>
             deviceName:<input type="text" id="deviceName" name="deviceName"></input><br/>
             deviceSecret:<input type="text" id="deviceSecret" name="deviceSecret" style="width:300px"></input><br/>
@@ -17,9 +18,9 @@
                 <option value="hmacmd5">hmacmd5</option>
                 <option value="hmacsha1" selected>hmacsha1</option>
             </select><br/><br/>
-            点击这里：<button id="submit" name="submit" onclick="onSign()">Generate</button>
+            点此生成密钥:<button id="submit" name="submit" onclick="onSign()">Generate</button>
             <br/>
-            <h3>签名结果：</h3>
+            <h3>生成结果:</h3>
             password:  <input type="text" id="password" name="password" style="width:600px"></input>
         </div>
     </body>
