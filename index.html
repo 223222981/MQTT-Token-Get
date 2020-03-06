@@ -99,7 +99,7 @@
         id.value   = mix('${clientID}|securemode=3,signmethod=hmacsha1|',{clientID: ci});
         name.value = mix('${YourDeviceName}&${YourProductKey}',{YourDeviceName: dn,YourProductKey: pk});
 
-        hp.value  =mix('{"clientId":"${clientID}","signmethod":"hmacsha1","sign":"${sign}","productKey":"${YourDeviceName}","deviceName":"${YourDeviceName}"}',{clientID: ci,sign: pw.value,YourProductKey: pk,YourDeviceName: dn});
+        hp.value  =mix('"{\\"clientId\\":\\"${clientID}\\",\\"signmethod\\":\\"hmacsha1\\",\\"sign\\":\\"${sign}\\",\\"productKey\\":\\"${YourDeviceName}\\",\\"deviceName\\":\\"${YourDeviceName}\\"}"',{clientID: ci,sign: pw.value,YourProductKey: pk,YourDeviceName: dn});
     }
     function mix (str,group) {
       var reg = /\$\{[^{}]+\}/gm;
