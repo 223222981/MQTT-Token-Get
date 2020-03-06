@@ -22,13 +22,17 @@
             点此生成密钥:<button id="submit" name="submit" onclick="onSign()">一键生成</button>
             <br/>
             <hr>
-            <h3>生成结果:</h3>
+            <h3>MQTT接入信息:</h3>
 
             URL :  <input type="text" id="mqtt_url" name="mqtt_url" style="width:600px"></input><br/>
             port:  <input type="text" id="mqtt_port" name="mqtt_port" style="width:600px"></input><br/>
             clientID:  <input type="text" id="mqtt_clientid" name="mqtt_clientid" style="width:600px"></input><br/>
             Username:  <input type="text" id="mqtt_name" name="mqtt_name" style="width:600px"></input><br/>
             password:  <input type="text" id="password" name="password" style="width:600px"></input><br/><hr>
+
+            <h3>HTTP接入信息:</h3>
+            设备认证 :  <input type="text" id="https_info" name="https_info" style="width:600px"></input><br/>
+
             <footer id="footer">
                 <p style="text-align:center;">
             <a href="http://www.taichi-maker.com/" target="_blank">www.taichi-maker.com</a><br>
@@ -48,10 +52,12 @@
         var sm = document.getElementById("signMethod").value;
         var pw = document.getElementById("password");
 
-        var url = document.getElementById("mqtt_url");
+        var url  = document.getElementById("mqtt_url");
         var port = document.getElementById("mqtt_port");
-        var id = document.getElementById("mqtt_clientid");
+        var id   = document.getElementById("mqtt_clientid");
         var name = document.getElementById("mqtt_name");
+
+        var hp   = document.getElementById("https_info");
 
         if (pk == null || pk == "" || dn == null || dn == "" 
                 || ds == null || ds == "" || ci == null || ci == "") {
@@ -87,11 +93,14 @@
         } else {
             alert("method is invalid");
         }
-        pw.value = sign.toUpperCase();
-        url.value = mix('${YourProductKey}.iot-as-mqtt.cn-shanghai.aliyuncs.com',{YourProductKey: pk});
+        pw.value   = sign.toUpperCase();
+        url.value  = mix('${YourProductKey}.iot-as-mqtt.cn-shanghai.aliyuncs.com',{YourProductKey: pk});
         port.value = mix('${port}',{port: 1883});
-        id.value = mix('${clientID}|securemode=3,signmethod=hmacsha1|',{clientID: ci});
+        id.value   = mix('${clientID}|securemode=3,signmethod=hmacsha1|',{clientID: ci});
         name.value = mix('${YourDeviceName}&${YourProductKey}',{YourDeviceName: dn,YourProductKey: pk});
+
+        hp.value  =mix('{"clientId":"${clientID}","signmethod":"hmacsha1","sign":"${sign}","productKey":"${YourDeviceName}","deviceName":"${YourDeviceName}"}',
+                            {clientID: ci,                                     sign: pw.value,      YourProductKey: pk  ,  YourDeviceName: dn});
     }
     function mix (str,group) {
       var reg = /\$\{[^{}]+\}/gm;
