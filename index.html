@@ -1,48 +1,91 @@
 <html>
 
-    <head>
-        <meta charset="utf-8">
-        <script type="text/javascript" src="hex_hmac_sha1.js"></script>
-        <script type="text/javascript" src="hex_md5.js"></script>
-    </head>
-    
-    <body>
-        <div>
-            <h3>你的阿里云物联网信息:</h3>
-            productKey:        <input type="text" id="productKey" name="productKey" style="width:600px"></input><br/>
-            deviceName:      <input type="text" id="deviceName" name="deviceName" style="width:600px"></input><br/>
-            deviceSecret:    <input type="text" id="deviceSecret" name="deviceSecret" style="width:600px"></input><br/>
-            <!-- timestamp(可不填): -->
-            <input type="text" id="timestamp" name="timestamp" style="visibility:hidden"></input><br>
-            clientId(任意):     <input type="text" id="clientId" name="clientId" style="width:600px"></input><br/>
-            method:<select id="signMethod" name="signMethod">
-                <!-- <option value="hmacmd5">hmacmd5</option> -->
-                <option value="hmacsha1" selected>hmacsha1</option>
-            </select><br/><br/>
-            点此生成密钥:<button id="submit" name="submit" onclick="onSign()">一键生成</button>
-            <br/>
-            <hr>
-            <h3>MQTT接入信息:</h3>
+<head>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="hex_hmac_sha1.js"></script>
+    <!--<script type="text/javascript" src="hex_md5.js"></script>-->
+</head>
 
-            URL :  <input type="text" id="mqtt_url" name="mqtt_url" style="width:600px"></input><br/>
-            port:  <input type="text" id="mqtt_port" name="mqtt_port" style="width:600px"></input><br/>
-            clientID:  <input type="text" id="mqtt_clientid" name="mqtt_clientid" style="width:600px"></input><br/>
-            Username:  <input type="text" id="mqtt_name" name="mqtt_name" style="width:600px"></input><br/>
-            password:  <input type="text" id="password" name="password" style="width:600px"></input><br/><hr>
+<body>
+    <div style="text-align:center;">
+        <h3>你的阿里云物联网信息:</h3>
+        <table border="0" align="center">
+            <tr>
+                <td> productKey: </td>
+                <td> <input type="text" id="productKey" name="productKey" style="width:600px"></input> </td>
+            </tr>
+            <tr>
+                <td>deviceName:</td>
+                <td><input type="text" id="deviceName" name="deviceName" style="width:600px"></input></td>
+            </tr>
+            <tr>
+                <td> deviceSecret: </td>
+                <td> <input type="text" id="deviceSecret" name="deviceSecret" style="width:600px"></input> </td>
+            </tr>
 
-            <h3>HTTP接入信息:</h3>
-            设备认证 :  <input type="text" id="https_info" name="https_info" style="width:600px"></input><br/>
+            <tr>
+                <td> clientId(任意): </td>
+                <td> <input type="text" id="clientId" name="clientId" style="width:600px"></input> </td>
+            </tr>
 
-            <footer id="footer">
-                <p style="text-align:center;">
-            <a href="http://www.taichi-maker.com/" target="_blank">www.taichi-maker.com</a><br>
-            Dapenson
-        </p>
-</footer>
+        </table>
+
+        <!-- timestamp(可不填): -->
+        <input type="text" id="timestamp" name="timestamp" style="visibility:hidden"></input>
+
+        <!--method:默认使用hmacmd5 --><select id="signMethod" name="signMethod" style="visibility:hidden">
+            <!-- <option value="hmacmd5">hmacmd5</option> -->
+            <option value="hmacsha1" selected>hmacsha1</option>
+        </select>
+        <div style="text-align:center;">
+            <button id="submit" name="submit" onclick="onSign()"
+                style="width:150px;height:60px;"><b>一键生成接入信息</b></button>
         </div>
-    </body>
+        <hr>
+        <h3>MQTT接入信息:</h3>
+        <table border="0" align="center">
+            <tr>
+                <td>URL : </td>
+                <td><input type="text" id="mqtt_url" name="mqtt_url" style="width:600px"></input></td>
+            </tr>
+            <tr>
+                <td>port: </td>
+                <td> <input type="text" id="mqtt_port" name="mqtt_port" style="width:600px"> </input></td>
+            </tr>
+            <tr>
+                <td>clientID:</td>
+                <td><input type="text" id="mqtt_clientid" name="mqtt_clientid" style="width:600px"></input></td>
+            </tr>
+            <tr>
+                <td>Username:</td>
+                <td><input type="text" id="mqtt_name" name="mqtt_name" style="width:600px"></input></td>
+            </tr>
+            <tr>
+                <td>password:</td>
+                <td><input type="text" id="password" name="password" style="width:600px"></input></td>
+            </tr>
 
-    <script>
+        </table>
+
+        <hr>
+
+        <h3>HTTP接入信息:</h3>
+        <div style="text-align:center;">
+            设备认证 : <textarea type="text" id="https_info" name="https_info"
+                style="width:600px;height: 60px;"></textarea><br />
+
+        </div>
+
+        <footer id="footer">
+            <p style="text-align:center;">
+                <a href="http://www.taichi-maker.com/" target="_blank">www.taichi-maker.com</a><br>
+                Dapenson
+            </p>
+        </footer>
+    </div>
+</body>
+
+<script>
     function onSign() {
         var pk = document.getElementById("productKey").value;
         var dn = document.getElementById("deviceName").value;
@@ -52,15 +95,15 @@
         var sm = document.getElementById("signMethod").value;
         var pw = document.getElementById("password");
 
-        var url  = document.getElementById("mqtt_url");
+        var url = document.getElementById("mqtt_url");
         var port = document.getElementById("mqtt_port");
-        var id   = document.getElementById("mqtt_clientid");
+        var id = document.getElementById("mqtt_clientid");
         var name = document.getElementById("mqtt_name");
 
-        var hp   = document.getElementById("https_info");
+        var hp = document.getElementById("https_info");
 
-        if (pk == null || pk == "" || dn == null || dn == "" 
-                || ds == null || ds == "" || ci == null || ci == "") {
+        if (pk == null || pk == "" || dn == null || dn == ""
+            || ds == null || ds == "" || ci == null || ci == "") {
             alert("productKey,deviceName,deviceSecret,clientId 不能为空");
             return;
         }
@@ -81,11 +124,11 @@
         // 按字典序排序
         keys = keys.sort();
         var list = [];
-        keys.forEach(function(key) {
+        keys.forEach(function (key) {
             list.push(key + options[key]);
         });
         var contentStr = list.join('');
-        var sign="";
+        var sign = "";
         if (sm == "hmacmd5") {
             sign = hex_hmac_md5(ds, contentStr);
         } else if (sm == "hmacsha1") {
@@ -93,27 +136,27 @@
         } else {
             alert("method is invalid");
         }
-        pw.value   = sign.toUpperCase();
-        url.value  = mix('${YourProductKey}.iot-as-mqtt.cn-shanghai.aliyuncs.com',{YourProductKey: pk});
-        port.value = mix('${port}',{port: 1883});
-        id.value   = mix('${clientID}|securemode=3,signmethod=hmacsha1|',{clientID: ci});
-        name.value = mix('${YourDeviceName}&${YourProductKey}',{YourDeviceName: dn,YourProductKey: pk});
+        pw.value = sign.toUpperCase();
+        url.value = mix('${YourProductKey}.iot-as-mqtt.cn-shanghai.aliyuncs.com', { YourProductKey: pk });
+        port.value = mix('${port}', { port: 1883 });
+        id.value = mix('${clientID}|securemode=3,signmethod=hmacsha1|', { clientID: ci });
+        name.value = mix('${YourDeviceName}&${YourProductKey}', { YourDeviceName: dn, YourProductKey: pk });
 
-        hp.value  =mix('"{\\"clientId\\":\\"${clientID}\\",\\"signmethod\\":\\"hmacsha1\\",\\"sign\\":\\"${sign}\\",\\"productKey\\":\\"${YourProductKey}\\",\\"deviceName\\":\\"${YourDeviceName}\\"}"',{clientID: ci,sign: pw.value,YourProductKey: pk,YourDeviceName: dn});
+        hp.value = mix('"{\\"clientId\\":\\"${clientID}\\",\\"signmethod\\":\\"hmacsha1\\",\\"sign\\":\\"${sign}\\",\\"productKey\\":\\"${YourProductKey}\\",\\"deviceName\\":\\"${YourDeviceName}\\"}"', { clientID: ci, sign: pw.value, YourProductKey: pk, YourDeviceName: dn });
     }
-    function mix (str,group) {
-      var reg = /\$\{[^{}]+\}/gm;
-      var strArr = str.split(reg);
-      var labelArr = str.match(reg);
-      var returnString = '',
-        i = 0,
-        label, len = labelArr.length;
-      for (; i < len; i++) {
-        label = labelArr[i].slice(2, -1);
-        returnString += strArr[i] + (group[label] != null ? group[label] : '');
-      }
-      return returnString + strArr[i];
+    function mix(str, group) {
+        var reg = /\$\{[^{}]+\}/gm;
+        var strArr = str.split(reg);
+        var labelArr = str.match(reg);
+        var returnString = '',
+            i = 0,
+            label, len = labelArr.length;
+        for (; i < len; i++) {
+            label = labelArr[i].slice(2, -1);
+            returnString += strArr[i] + (group[label] != null ? group[label] : '');
+        }
+        return returnString + strArr[i];
     }
-    </script>
+</script>
 
 </html>
