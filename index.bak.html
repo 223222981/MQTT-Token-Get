@@ -4,19 +4,19 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="text/javascript" src="hex_hmac_sha1.js"></script>
-
+    <!--<script type="text/javascript" src="hex_md5.js"></script>-->
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-
+    <!-- <script src="https://dapenson.xyz/n/jq/jquery-3.3.1.min.js"></script> -->
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.bootcdn.net/ajax/libs/particles.js/2.0.0/particles.js"></script>
-
+        <!-- <script src="https://dapenson.xyz/n/particles.min.js"></script> -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/particlesjs/2.2.3/particles.min.js"></script>
     <link rel="stylesheet" href="aliyun_mqtt.css">
+    <!-- <link rel="stylesheet" href="aliyun_mqtt.css"> -->
 </head>
 
 <body>
-    <!-- <canvas class="background"></canvas> -->
-    <div id="particles-js"></div>
+    <canvas class="background"></canvas>
     <div class="container">
         <h1>阿里云IOT接入</h1>
 
@@ -132,13 +132,57 @@
         }
     }
 
-/* particlesJS.load(@dom-id, @path-json, @callback (optional)); */
-particlesJS.load('particles-js', 'assets\\particlesjs-config.json', function() {
-  console.log('callback - particles.js config loaded');
-});
+
+    Particles.init({
+
+        // normal options
+        selector: '.background',
+        maxParticles: 80,
+        color: ['#6dedff'],
+        connectParticles: 1,
+        minDistance: 100,
 
 
+        // options for breakpoints
+        responsive: [
+            {
+                breakpoint:
+                    768
+                ,
+                options: {
+                    maxParticles:
+                        200
+                    ,
+                    color:
+                        '#48F2E3'
+                    ,
+                    connectParticles:
+                        true
+                }
+            }, {
+                breakpoint:
+                    425
+                ,
+                options: {
+                    maxParticles:
+                        100
+                    ,
+                    connectParticles:
+                        true
+                }
+            }, {
+                breakpoint:
+                    320
+                ,
+                options: {
+                    maxParticles:
+                        0
 
+                    // disables particles.js
+                }
+            }
+        ]
+    });
 </script>
 
 </html>

@@ -4,19 +4,28 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="text/javascript" src="hex_hmac_sha1.js"></script>
-    <!--<script type="text/javascript" src="hex_md5.js"></script>-->
+
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <!-- <script src="https://dapenson.xyz/n/jq/jquery-3.3.1.min.js"></script> -->
+
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <!-- <script src="https://dapenson.xyz/n/particles.min.js"></script> -->
-    <script src="https://cdn.bootcdn.net/ajax/libs/particlesjs/2.2.3/particles.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+
     <link rel="stylesheet" href="aliyun_mqtt.css">
-    <!-- <link rel="stylesheet" href="aliyun_mqtt.css"> -->
 </head>
 
 <body>
-    <canvas class="background"></canvas>
+    <div id="particles-js"></div>
+    <style type="text/css">
+        #particles-js {
+            z-index: 0;
+            position: absolute;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            background: #2c3e50;
+        }
+    </style>
     <div class="container">
         <h1>阿里云IOT接入</h1>
 
@@ -132,57 +141,125 @@
         }
     }
 
+    particlesJS('particles-js', {
+  "particles": {
+    "number": {
+      "value": 80,
+      "density": {
+        "enable": true,
+        "value_area": 800
+      }
+    },
+    "color": {
+      "value": "#ffffff"
+    },
+    "shape": {
+      "type": "circle",
+      "stroke": {
+        "width": 0,
+        "color": "#000100"
+      },
+      "polygon": {
+        "nb_sides": 5
+      },
+      "image": {
+        "src": "img/github.svg",
+        "width": 100,
+        "height": 100
+      }
+    },
+    "opacity": {
+      "value": 0.5,
+      "random": false,
+      "anim": {
+        "enable": false,
+        "speed": 1,
+        "opacity_min": 0.1,
+        "sync": false
+      }
+    },
+    "size": {
+      "value": 5,
+      "random": true,
+      "anim": {
+        "enable": false,
+        "speed": 40,
+        "size_min": 0.1,
+        "sync": false
+      }
+    },
+    "line_linked": {
+      "enable": true,
+      "distance": 150,
+      "color": "#ffffff",
+      "opacity": 0.4,
+      "width": 1
+    },
+    "move": {
+      "enable": true,
+      "speed": 3,
+      "direction": "none",
+      "random": false,
+      "straight": false,
+      "out_mode": "out",
+      "attract": {
+        "enable": false,
+        "rotateX": 600,
+        "rotateY": 1200
+      }
+    }
+  },
+  "interactivity": {
+    "detect_on": "canvas",
+    "events": {
+      "onhover": {
+        "enable": true,
+        "mode": "repulse"
+      },
+      "onclick": {
+        "enable": true,
+        "mode": "push"
+      },
+      "resize": true
+    },
+    "modes": {
+      "grab": {
+        "distance": 400,
+        "line_linked": {
+          "opacity": 1
+        }
+      },
+      "bubble": {
+        "distance": 400,
+        "size": 40,
+        "duration": 2,
+        "opacity": 8,
+        "speed": 3
+      },
+      "repulse": {
+        "distance": 200
+      },
+      "push": {
+        "particles_nb": 4
+      },
+      "remove": {
+        "particles_nb": 2
+      }
+    }
+  },
+  "retina_detect": true,
+  "config_demo": {
+    "hide_card": false,
+    "background_color": "#2c3e50",
+    "background_image": "",
+    "background_position": "50% 50%",
+    "background_repeat": "no-repeat",
+    "background_size": "cover"
+  }
+})
 
-    Particles.init({
-
-        // normal options
-        selector: '.background',
-        maxParticles: 80,
-        color: ['#6dedff'],
-        connectParticles: 1,
-        minDistance: 100,
 
 
-        // options for breakpoints
-        responsive: [
-            {
-                breakpoint:
-                    768
-                ,
-                options: {
-                    maxParticles:
-                        200
-                    ,
-                    color:
-                        '#48F2E3'
-                    ,
-                    connectParticles:
-                        true
-                }
-            }, {
-                breakpoint:
-                    425
-                ,
-                options: {
-                    maxParticles:
-                        100
-                    ,
-                    connectParticles:
-                        true
-                }
-            }, {
-                breakpoint:
-                    320
-                ,
-                options: {
-                    maxParticles:
-                        0
-
-                    // disables particles.js
-                }
-            }
-        ]
-    });
 </script>
 
 </html>
