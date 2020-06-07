@@ -1,262 +1,285 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script type="text/javascript" src="hex_hmac_sha1.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script type="text/javascript" src="hex_hmac_sha1.js"></script>
 
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
 
-    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.bootcdn.net/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.css">
 
-    <link rel="stylesheet" href="aliyun_mqtt.css">
+
+  <link rel="stylesheet" href="aliyun_mqtt.css">
 </head>
 
 <body>
-    <div id="particles-js"></div>
-    <style type="text/css">
-        #particles-js {
-            z-index: 0;
-            position: absolute;
-            top: 0;
-            height: 100%;
-            width: 100%;
-            background: #2c3e50;
-        }
-    </style>
-    <div class="container">
-        <h1>阿里云IOT接入</h1>
+  <div id="particles-js"></div>
+  <style type="text/css">
+    #particles-js {
+      z-index: 0;
+      position: absolute;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      background: #2c3e50;
+    }
+  </style>
 
-        <h3>你的阿里云物联网信息:</h3>
-        <input class="tbx" type="text" id="productKey" name="productKey" placeholder="productKey"></input>
-        <input class="tbx" type="text" id="deviceName" name="deviceName" placeholder="deviceName"></input>
-        <input class="tbx" type="text" id="deviceSecret" name="deviceSecret" placeholder="deviceSecret"></input>
-        <input class="tbx" type="text" id="clientId" name="clientId" placeholder="clientId(任意) "></input>
+<input type="checkbox" id="check">
+<label for="check">
+    <i class="fas fa-bars" id="btn"></i>
+    <i class="fas fa-times" id="cancel"></i>
+</label>
+<div class="sidebar">
+    <header>Dapenson</header>
+    <ul>
+        <li><a href="http://www.taichi-maker.com/" target="_blank"  ><i class="fas fa-qrcode"></i>太极创客</a></li>
+        <li><a href="https://dapenson.xyz/"  target="_blank"><i class="fas fa-link"></i>Dapenson Blog</a></li>
+        <li><a href="https://dapenson.gitee.io/home/" target="_blank"><i class="fas fa-stream" ></i>Dapenson Home</a></li>
+        <!-- <li><a href="#"><i class="fas fa-calendar-week"></i>Events</a></li>
+        <li><a href="#"><i class="far fa-question-circle"></i>About</a></li>
+        <li><a href="#"><i class="fas fa-sliders-h"></i>Services</a></li>
+        <li><a href="#"><i class="far fa-envelope"></i>Contact</a></li> -->
+    </ul>
+</div>
+<section class="section"></section>
 
-        <input type="text" id="timestamp" name="timestamp" style="visibility:hidden"></input>
-        <!--method:默认使用hmacmd5 -->
-        <select id="signMethod" name="signMethod" style="visibility:hidden">
-            <!-- <option value="hmacmd5">hmacmd5</option> -->
-            <option value="hmacsha1" selected>hmacsha1</option>
-        </select>
 
-        <button class="sub" id="onSign" name="onSign" onclick="onSign()"><b>一键生成接入信息</b></button>
-        <br>
+  <div class="container">
+    <h1>阿里云IOT接入</h1>
 
-        <h3>MQTT接入信息:</h3>
-        <input class="tbx" type="text" id="mqtt_url" name="mqtt_url" placeholder="URL"></input>
-        <input class="tbx" type="text" id="mqtt_port" name="mqtt_port" placeholder="port"> </input>
-        <input class="tbx" type="text" id="mqtt_clientid" name="mqtt_clientid" placeholder="clientID"></input>
-        <input class="tbx" type="text" id="mqtt_name" name="mqtt_name" placeholder="Username"></input>
-        <input class="tbx" type="text" id="password" name="password" placeholder="password"></input>
+    <h3>你的阿里云物联网信息:</h3>
+    <input class="tbx" type="text" id="productKey" name="productKey" placeholder="productKey"></input>
+    <input class="tbx" type="text" id="deviceName" name="deviceName" placeholder="deviceName"></input>
+    <input class="tbx" type="text" id="deviceSecret" name="deviceSecret" placeholder="deviceSecret"></input>
+    <input class="tbx" type="text" id="clientId" name="clientId" placeholder="clientId(任意) "></input>
 
-        <h3>HTTP接入信息:</h3>
-        <textarea class="tbx" type="text" id="https_info" name="https_info" placeholder="设备认证"></textarea>
+    <input type="text" id="timestamp" name="timestamp" style="visibility:hidden"></input>
+    <!--method:默认使用hmacmd5 -->
+    <select id="signMethod" name="signMethod" style="visibility:hidden">
+      <!-- <option value="hmacmd5">hmacmd5</option> -->
+      <option value="hmacsha1" selected>hmacsha1</option>
+    </select>
 
-    </div>
+    <button class="sub" id="onSign" name="onSign" onclick="onSign()"><b>一键生成接入信息</b></button>
+    <br>
+
+    <h3>MQTT接入信息:</h3>
+    <input class="tbx" type="text" id="mqtt_url" name="mqtt_url" placeholder="URL"></input>
+    <input class="tbx" type="text" id="mqtt_port" name="mqtt_port" placeholder="port"> </input>
+    <input class="tbx" type="text" id="mqtt_clientid" name="mqtt_clientid" placeholder="clientID"></input>
+    <input class="tbx" type="text" id="mqtt_name" name="mqtt_name" placeholder="Username"></input>
+    <input class="tbx" type="text" id="password" name="password" placeholder="password"></input>
+
+    <h3>HTTP接入信息:</h3>
+    <textarea class="tbx" type="text" id="https_info" name="https_info" placeholder="设备认证"></textarea>
+
+  </div>
 </body>
 
 <script>
 
-    function onSign() {
-        var pk = document.getElementById("productKey").value;
-        var dn = document.getElementById("deviceName").value;
-        var ds = document.getElementById("deviceSecret").value;
-        var ts = document.getElementById("timestamp").value;
-        var ci = document.getElementById("clientId").value;
-        var sm = document.getElementById("signMethod").value;
-        var pw = document.getElementById("password");
+  function onSign() {
+    var pk = document.getElementById("productKey").value;
+    var dn = document.getElementById("deviceName").value;
+    var ds = document.getElementById("deviceSecret").value;
+    var ts = document.getElementById("timestamp").value;
+    var ci = document.getElementById("clientId").value;
+    var sm = document.getElementById("signMethod").value;
+    var pw = document.getElementById("password");
 
-        var url = document.getElementById("mqtt_url");
-        var port = document.getElementById("mqtt_port");
-        var id = document.getElementById("mqtt_clientid");
-        var name = document.getElementById("mqtt_name");
+    var url = document.getElementById("mqtt_url");
+    var port = document.getElementById("mqtt_port");
+    var id = document.getElementById("mqtt_clientid");
+    var name = document.getElementById("mqtt_name");
 
-        var hp = document.getElementById("https_info");
+    var hp = document.getElementById("https_info");
 
-        if (pk == null || pk == "" || dn == null || dn == ""
-            || ds == null || ds == "" || ci == null || ci == "") {
-            alert("productKey,deviceName,deviceSecret,clientId 不能为空");
-            return;
-        }
-        var options = {
-            productKey: pk,
-            deviceName: dn,
-            timestamp: ts,
-            clientId: ci
-        }
-        if (ts == null || ts == "") {
-            options = {
-                productKey: pk,
-                deviceName: dn,
-                clientId: ci
-            }
-        }
-        var keys = Object.keys(options).sort();
-        // 按字典序排序
-        keys = keys.sort();
-        var list = [];
-        keys.forEach(function (key) {
-            list.push(key + options[key]);
-        });
-        var contentStr = list.join('');
-        var sign = "";
-        if (sm == "hmacmd5") {
-            sign = hex_hmac_md5(ds, contentStr);
-        } else if (sm == "hmacsha1") {
-            sign = hex_hmac_sha1(ds, contentStr);
-        } else {
-            alert("method is invalid");
-        }
-        pw.value = sign.toUpperCase();
-        url.value = mix('${YourProductKey}.iot-as-mqtt.cn-shanghai.aliyuncs.com', { YourProductKey: pk });
-        port.value = mix('${port}', { port: 1883 });
-        id.value = mix('${clientID}|securemode=3,signmethod=hmacsha1|', { clientID: ci });
-        name.value = mix('${YourDeviceName}&${YourProductKey}', { YourDeviceName: dn, YourProductKey: pk });
-
-        hp.value = mix('"{\\"clientId\\":\\"${clientID}\\",\\"signmethod\\":\\"hmacsha1\\",\\"sign\\":\\"${sign}\\",\\"productKey\\":\\"${YourProductKey}\\",\\"deviceName\\":\\"${YourDeviceName}\\"}"', { clientID: ci, sign: pw.value, YourProductKey: pk, YourDeviceName: dn });
+    if (pk == null || pk == "" || dn == null || dn == ""
+      || ds == null || ds == "" || ci == null || ci == "") {
+      alert("productKey,deviceName,deviceSecret,clientId 不能为空");
+      return;
     }
-    function mix(str, group) {
-        var reg = /\$\{[^{}]+\}/gm;
-        var strArr = str.split(reg);
-        var labelArr = str.match(reg);
-        var returnString = '',
-            i = 0,
-            label, len = labelArr.length;
-        for (; i < len; i++) {
-            label = labelArr[i].slice(2, -1);
-            returnString += strArr[i] + (group[label] != null ? group[label] : '');
-        }
-        return returnString + strArr[i];
+    var options = {
+      productKey: pk,
+      deviceName: dn,
+      timestamp: ts,
+      clientId: ci
     }
-
-    document.onkeydown = function (e) { // 回车提交表单
-        // 兼容FF和IE和Opera
-        var theEvent = window.event || e;
-        var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
-        if (code == 13) {
-            onSign();
-        }
-    }
-
-    particlesJS('particles-js', {
-  "particles": {
-    "number": {
-      "value": 80,
-      "density": {
-        "enable": true,
-        "value_area": 800
-      }
-    },
-    "color": {
-      "value": "#ffffff"
-    },
-    "shape": {
-      "type": "circle",
-      "stroke": {
-        "width": 0,
-        "color": "#000100"
-      },
-      "polygon": {
-        "nb_sides": 5
-      },
-      "image": {
-        "src": "img/github.svg",
-        "width": 100,
-        "height": 100
-      }
-    },
-    "opacity": {
-      "value": 0.5,
-      "random": false,
-      "anim": {
-        "enable": false,
-        "speed": 1,
-        "opacity_min": 0.1,
-        "sync": false
-      }
-    },
-    "size": {
-      "value": 5,
-      "random": true,
-      "anim": {
-        "enable": false,
-        "speed": 40,
-        "size_min": 0.1,
-        "sync": false
-      }
-    },
-    "line_linked": {
-      "enable": true,
-      "distance": 150,
-      "color": "#ffffff",
-      "opacity": 0.4,
-      "width": 1
-    },
-    "move": {
-      "enable": true,
-      "speed": 3,
-      "direction": "none",
-      "random": false,
-      "straight": false,
-      "out_mode": "out",
-      "attract": {
-        "enable": false,
-        "rotateX": 600,
-        "rotateY": 1200
+    if (ts == null || ts == "") {
+      options = {
+        productKey: pk,
+        deviceName: dn,
+        clientId: ci
       }
     }
-  },
-  "interactivity": {
-    "detect_on": "canvas",
-    "events": {
-      "onhover": {
-        "enable": true,
-        "mode": "repulse"
-      },
-      "onclick": {
-        "enable": true,
-        "mode": "push"
-      },
-      "resize": true
-    },
-    "modes": {
-      "grab": {
-        "distance": 400,
-        "line_linked": {
-          "opacity": 1
-        }
-      },
-      "bubble": {
-        "distance": 400,
-        "size": 40,
-        "duration": 2,
-        "opacity": 8,
-        "speed": 3
-      },
-      "repulse": {
-        "distance": 200
-      },
-      "push": {
-        "particles_nb": 4
-      },
-      "remove": {
-        "particles_nb": 2
-      }
+    var keys = Object.keys(options).sort();
+    // 按字典序排序
+    keys = keys.sort();
+    var list = [];
+    keys.forEach(function (key) {
+      list.push(key + options[key]);
+    });
+    var contentStr = list.join('');
+    var sign = "";
+    if (sm == "hmacmd5") {
+      sign = hex_hmac_md5(ds, contentStr);
+    } else if (sm == "hmacsha1") {
+      sign = hex_hmac_sha1(ds, contentStr);
+    } else {
+      alert("method is invalid");
     }
-  },
-  "retina_detect": true,
-  "config_demo": {
-    "hide_card": false,
-    "background_color": "#2c3e50",
-    "background_image": "",
-    "background_position": "50% 50%",
-    "background_repeat": "no-repeat",
-    "background_size": "cover"
+    pw.value = sign.toUpperCase();
+    url.value = mix('${YourProductKey}.iot-as-mqtt.cn-shanghai.aliyuncs.com', { YourProductKey: pk });
+    port.value = mix('${port}', { port: 1883 });
+    id.value = mix('${clientID}|securemode=3,signmethod=hmacsha1|', { clientID: ci });
+    name.value = mix('${YourDeviceName}&${YourProductKey}', { YourDeviceName: dn, YourProductKey: pk });
+
+    hp.value = mix('"{\\"clientId\\":\\"${clientID}\\",\\"signmethod\\":\\"hmacsha1\\",\\"sign\\":\\"${sign}\\",\\"productKey\\":\\"${YourProductKey}\\",\\"deviceName\\":\\"${YourDeviceName}\\"}"', { clientID: ci, sign: pw.value, YourProductKey: pk, YourDeviceName: dn });
   }
-})
+  function mix(str, group) {
+    var reg = /\$\{[^{}]+\}/gm;
+    var strArr = str.split(reg);
+    var labelArr = str.match(reg);
+    var returnString = '',
+      i = 0,
+      label, len = labelArr.length;
+    for (; i < len; i++) {
+      label = labelArr[i].slice(2, -1);
+      returnString += strArr[i] + (group[label] != null ? group[label] : '');
+    }
+    return returnString + strArr[i];
+  }
+
+  document.onkeydown = function (e) { // 回车提交表单
+    // 兼容FF和IE和Opera
+    var theEvent = window.event || e;
+    var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
+    if (code == 13) {
+      onSign();
+    }
+  }
+
+  particlesJS('particles-js', {
+    "particles": {
+      "number": {
+        "value": 80,
+        "density": {
+          "enable": true,
+          "value_area": 800
+        }
+      },
+      "color": {
+        "value": "#6dedff"
+      },
+      "shape": {
+        "type": "circle",
+        "stroke": {
+          "width": 0,
+          "color": "#6dedff"
+        },
+        "polygon": {
+          "nb_sides": 5
+        },
+        "image": {
+          "src": "img/github.svg",
+          "width": 100,
+          "height": 100
+        }
+      },
+      "opacity": {
+        "value": 0.5,
+        "random": false,
+        "anim": {
+          "enable": false,
+          "speed": 1,
+          "opacity_min": 0.1,
+          "sync": false
+        }
+      },
+      "size": {
+        "value": 5,
+        "random": true,
+        "anim": {
+          "enable": false,
+          "speed": 40,
+          "size_min": 0.1,
+          "sync": false
+        }
+      },
+      "line_linked": {
+        "enable": true,
+        "distance": 150,
+        "color": "#6dedff",
+        "opacity": 0.4,
+        "width": 1
+      },
+      "move": {
+        "enable": true,
+        "speed": 3,
+        "direction": "none",
+        "random": false,
+        "straight": false,
+        "out_mode": "out",
+        "attract": {
+          "enable": false,
+          "rotateX": 600,
+          "rotateY": 1200
+        }
+      }
+    },
+    "interactivity": {
+      "detect_on": "canvas",
+      "events": {
+        "onhover": {
+          "enable": true,
+          "mode": "repulse"
+        },
+        "onclick": {
+          "enable": true,
+          "mode": "push"
+        },
+        "resize": true
+      },
+      "modes": {
+        "grab": {
+          "distance": 400,
+          "line_linked": {
+            "opacity": 1
+          }
+        },
+        "bubble": {
+          "distance": 400,
+          "size": 40,
+          "duration": 2,
+          "opacity": 8,
+          "speed": 3
+        },
+        "repulse": {
+          "distance": 200
+        },
+        "push": {
+          "particles_nb": 4
+        },
+        "remove": {
+          "particles_nb": 2
+        }
+      }
+    },
+    "retina_detect": true,
+    "config_demo": {
+      "hide_card": false,
+      "background_color": "#2c3e50",
+      "background_image": "",
+      "background_position": "50% 50%",
+      "background_repeat": "no-repeat",
+      "background_size": "cover"
+    }
+  })
 
 
 
