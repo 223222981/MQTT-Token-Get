@@ -2,90 +2,55 @@
 
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="text/javascript" src="hex_hmac_sha1.js"></script>
     <!--<script type="text/javascript" src="hex_md5.js"></script>-->
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <!-- <script src="https://dapenson.xyz/n/jq/jquery-3.3.1.min.js"></script> -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <!-- <script src="https://dapenson.xyz/n/particles.min.js"></script> -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/particlesjs/2.2.3/particles.min.js"></script>
+    <link rel="stylesheet" href="aliyun_mqtt.css">
+    <!-- <link rel="stylesheet" href="aliyun_mqtt.css"> -->
 </head>
 
 <body>
-    <div style="text-align:center;">
+    <canvas class="background"></canvas>
+    <div class="container">
+        <h1>阿里云IOT接入</h1>
+
         <h3>你的阿里云物联网信息:</h3>
-        <table border="0" align="center">
-            <tr>
-                <td> productKey: </td>
-                <td> <input type="text" id="productKey" name="productKey" style="width:600px"></input> </td>
-            </tr>
-            <tr>
-                <td>deviceName:</td>
-                <td><input type="text" id="deviceName" name="deviceName" style="width:600px"></input></td>
-            </tr>
-            <tr>
-                <td> deviceSecret: </td>
-                <td> <input type="text" id="deviceSecret" name="deviceSecret" style="width:600px"></input> </td>
-            </tr>
+        <input class="tbx" type="text" id="productKey" name="productKey" placeholder="productKey"></input>
+        <input class="tbx" type="text" id="deviceName" name="deviceName" placeholder="deviceName"></input>
+        <input class="tbx" type="text" id="deviceSecret" name="deviceSecret" placeholder="deviceSecret"></input>
+        <input class="tbx" type="text" id="clientId" name="clientId" placeholder="clientId(任意) "></input>
 
-            <tr>
-                <td> clientId(任意): </td>
-                <td> <input type="text" id="clientId" name="clientId" style="width:600px"></input> </td>
-            </tr>
-
-        </table>
-
-        <!-- timestamp(可不填): -->
         <input type="text" id="timestamp" name="timestamp" style="visibility:hidden"></input>
-
-        <!--method:默认使用hmacmd5 --><select id="signMethod" name="signMethod" style="visibility:hidden">
+        <!--method:默认使用hmacmd5 -->
+        <select id="signMethod" name="signMethod" style="visibility:hidden">
             <!-- <option value="hmacmd5">hmacmd5</option> -->
             <option value="hmacsha1" selected>hmacsha1</option>
         </select>
-        <div style="text-align:center;">
-            <button id="submit" name="submit" onclick="onSign()"
-                style="width:150px;height:60px;"><b>一键生成接入信息</b></button>
-        </div>
-        <hr>
+
+        <button class="sub" id="onSign" name="onSign" onclick="onSign()"><b>一键生成接入信息</b></button>
+        <br>
+
         <h3>MQTT接入信息:</h3>
-        <table border="0" align="center">
-            <tr>
-                <td>URL : </td>
-                <td><input type="text" id="mqtt_url" name="mqtt_url" style="width:600px"></input></td>
-            </tr>
-            <tr>
-                <td>port: </td>
-                <td> <input type="text" id="mqtt_port" name="mqtt_port" style="width:600px"> </input></td>
-            </tr>
-            <tr>
-                <td>clientID:</td>
-                <td><input type="text" id="mqtt_clientid" name="mqtt_clientid" style="width:600px"></input></td>
-            </tr>
-            <tr>
-                <td>Username:</td>
-                <td><input type="text" id="mqtt_name" name="mqtt_name" style="width:600px"></input></td>
-            </tr>
-            <tr>
-                <td>password:</td>
-                <td><input type="text" id="password" name="password" style="width:600px"></input></td>
-            </tr>
-
-        </table>
-
-        <hr>
+        <input class="tbx" type="text" id="mqtt_url" name="mqtt_url" placeholder="URL"></input>
+        <input class="tbx" type="text" id="mqtt_port" name="mqtt_port" placeholder="port"> </input>
+        <input class="tbx" type="text" id="mqtt_clientid" name="mqtt_clientid" placeholder="clientID"></input>
+        <input class="tbx" type="text" id="mqtt_name" name="mqtt_name" placeholder="Username"></input>
+        <input class="tbx" type="text" id="password" name="password" placeholder="password"></input>
 
         <h3>HTTP接入信息:</h3>
-        <div style="text-align:center;">
-            设备认证 : <textarea type="text" id="https_info" name="https_info"
-                style="width:600px;height: 60px;"></textarea><br />
+        <textarea class="tbx" type="text" id="https_info" name="https_info" placeholder="设备认证"></textarea>
 
-        </div>
-
-        <footer id="footer">
-            <p style="text-align:center;">
-                <a href="http://www.taichi-maker.com/" target="_blank">www.taichi-maker.com</a><br>
-                Dapenson
-            </p>
-        </footer>
     </div>
 </body>
 
 <script>
+
     function onSign() {
         var pk = document.getElementById("productKey").value;
         var dn = document.getElementById("deviceName").value;
@@ -157,6 +122,67 @@
         }
         return returnString + strArr[i];
     }
+
+    document.onkeydown = function (e) { // 回车提交表单
+        // 兼容FF和IE和Opera
+        var theEvent = window.event || e;
+        var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
+        if (code == 13) {
+            onSign();
+        }
+    }
+
+
+    Particles.init({
+
+        // normal options
+        selector: '.background',
+        maxParticles: 80,
+        color: ['#6dedff'],
+        connectParticles: 1,
+        minDistance: 100,
+
+
+        // options for breakpoints
+        responsive: [
+            {
+                breakpoint:
+                    768
+                ,
+                options: {
+                    maxParticles:
+                        200
+                    ,
+                    color:
+                        '#48F2E3'
+                    ,
+                    connectParticles:
+                        true
+                }
+            }, {
+                breakpoint:
+                    425
+                ,
+                options: {
+                    maxParticles:
+                        100
+                    ,
+                    connectParticles:
+                        true
+                }
+            }, {
+                breakpoint:
+                    320
+                ,
+                options: {
+                    maxParticles:
+                        0
+
+                    // disables particles.js
+                }
+            }
+        ]
+    });
 </script>
 
 </html>
