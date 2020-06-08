@@ -11,6 +11,7 @@
   <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdn.bootcdn.net/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.css"> -->
+  <link rel="stylesheet" href="https://at.alicdn.com/t/font_1796094_4zoaryp2io2.css">
 
 
   <link rel="stylesheet" href="aliyun_mqtt.css">
@@ -29,24 +30,25 @@
     }
   </style>
 
-<input type="checkbox" id="check">
-<label for="check">
-    <i class="fas fa-bars" id="btn">☰</i>
-    <i class="fas fa-times" id="cancel">☰</i>
-</label>
-<div class="sidebar">
-    <header>Dapenson</header>
+  <input type="checkbox" id="check">
+  <label for="check">
+    <i class="iconfont iconbars" id="btn"></i>
+    <i class="iconfont" id="cancel">&#xe601;</i>
+  </label>
+  <div class="sidebar">
+    <header class="iconfont iconwulianwang">Dapenson</header>
     <ul>
-        <li><a href="http://www.taichi-maker.com/" target="_blank"  ><i class="fas fa-qrcode"></i>太极创客</a></li>
-        <li><a href="https://dapenson.xyz/"  target="_blank"><i class="fas fa-link"></i>Dapenson Blog</a></li>
-        <li><a href="https://dapenson.gitee.io/home/" target="_blank"><i class="fas fa-stream" ></i>Dapenson Home</a></li>
-        <!-- <li><a href="#"><i class="fas fa-calendar-week"></i>Events</a></li>
+      <li><a href="http://www.taichi-maker.com/" target="_blank"><i class="iconfont icondrivesite"></i>太极创客</a></li>
+      <li><a href="https://dapenson.xyz/" target="_blank"><i class="iconfont iconblog"></i>Dapenson Blog</a></li>
+      <li><a href="https://dapenson.gitee.io/home/" target="_blank"><i class="iconfont icondrive-site"></i>Dapenson
+          Home</a></li>
+      <!-- <li><a href="#"><i class="iconfont fa-calendar-week"></i>Events</a></li>
         <li><a href="#"><i class="far fa-question-circle"></i>About</a></li>
-        <li><a href="#"><i class="fas fa-sliders-h"></i>Services</a></li>
+        <li><a href="#"><i class="iconfont fa-sliders-h"></i>Services</a></li>
         <li><a href="#"><i class="far fa-envelope"></i>Contact</a></li> -->
     </ul>
-</div>
-<section class="section"></section>
+  </div>
+  <section class="section"></section>
 
 
   <div class="container">
@@ -164,122 +166,126 @@
     }
   }
 
-  particlesJS('particles-js', {
-    "particles": {
-      "number": {
-        "value": 80,
-        "density": {
-          "enable": true,
-          "value_area": 800
-        }
-      },
-      "color": {
-        "value": "#6dedff"
-      },
-      "shape": {
-        "type": "circle",
-        "stroke": {
-          "width": 0,
-          "color": "#6dedff"
-        },
-        "polygon": {
-          "nb_sides": 5
-        },
-        "image": {
-          "src": "img/github.svg",
-          "width": 100,
-          "height": 100
-        }
-      },
-      "opacity": {
-        "value": 0.5,
-        "random": false,
-        "anim": {
-          "enable": false,
-          "speed": 1,
-          "opacity_min": 0.1,
-          "sync": false
-        }
-      },
-      "size": {
-        "value": 5,
-        "random": true,
-        "anim": {
-          "enable": false,
-          "speed": 40,
-          "size_min": 0.1,
-          "sync": false
-        }
-      },
-      "line_linked": {
-        "enable": true,
-        "distance": 150,
-        "color": "#6dedff",
-        "opacity": 0.4,
-        "width": 1
-      },
-      "move": {
-        "enable": true,
-        "speed": 3,
-        "direction": "none",
-        "random": false,
-        "straight": false,
-        "out_mode": "out",
-        "attract": {
-          "enable": false,
-          "rotateX": 600,
-          "rotateY": 1200
-        }
-      }
-    },
-    "interactivity": {
-      "detect_on": "canvas",
-      "events": {
-        "onhover": {
-          "enable": true,
-          "mode": "repulse"
-        },
-        "onclick": {
-          "enable": true,
-          "mode": "push"
-        },
-        "resize": true
-      },
-      "modes": {
-        "grab": {
-          "distance": 400,
-          "line_linked": {
-            "opacity": 1
+  particlesJS('particles-js',
+
+     {
+      "particles": {
+        "number": {
+          "value": 80,
+          "density": {
+            "enable": true,
+            "value_area": 800
           }
         },
-        "bubble": {
-          "distance": 400,
-          "size": 40,
-          "duration": 2,
-          "opacity": 8,
-          "speed": 3
+        "color": {
+          "value": "#6dedff"
         },
-        "repulse": {
-          "distance": 200
+        "shape": {
+          "type": "edge",
+          "stroke": {
+            "width": 0,
+            "color": "#6dedff"
+          },
+          "polygon": {
+            "nb_sides": 5
+          },
+          "image": {
+            "src": "img/github.svg",
+            "width": 100,
+            "height": 100
+          }
         },
-        "push": {
-          "particles_nb": 4
+        "opacity": {
+          "value": 0.5,
+          "random": 1,
+          "anim": {
+            "enable": false,
+            "speed": 1,
+            "opacity_min": 0.1,
+            "sync": false
+          }
         },
-        "remove": {
-          "particles_nb": 2
+        "size": {
+          "value": 3,
+          "random": true,
+          "anim": {
+            "enable": false,
+            "speed": 10,
+            "size_min": 0.1,
+            "sync": false
+          }
+        },
+        "line_linked": {
+          "enable": true,
+          "distance": 150,
+          "color": "#6dedff",
+          "opacity": 0.4,
+          "width": 1
+        },
+        "move": {
+          "enable": true,
+          "speed": 2,
+          "direction": "none",
+          "random": false,
+          "straight": false,
+          "out_mode": "out",
+          "attract": {
+            "enable": 1,
+            "rotateX": 600,
+            "rotateY": 1200
+          }
         }
+      },
+      "interactivity": {
+        "detect_on": "canvas",
+        "events": {
+          "onhover": {
+            "enable": true,
+            "mode": "grab"
+          },
+          "onclick": {
+            "enable": true,
+            "mode": "push"
+          },
+          "resize": true
+        },
+        "modes": {
+          "grab": {
+            "distance": 200,
+            "line_linked": {
+              "opacity": 0.75
+            }
+          },
+          "bubble": {
+            "distance": 400,
+            "size": 40,
+            "duration": 2,
+            "opacity": 8,
+            "speed": 3
+          },
+          "repulse": {
+            "distance": 200
+          },
+          "push": {
+            "particles_nb": 4
+          },
+          "remove": {
+            "particles_nb": 2
+          }
+        }
+      },
+      "retina_detect": true,
+      "config_demo": {
+        "hide_card": false,
+        "background_color": "#2c3e50",
+        "background_image": "",
+        "background_position": "50% 50%",
+        "background_repeat": "no-repeat",
+        "background_size": "cover"
       }
-    },
-    "retina_detect": true,
-    "config_demo": {
-      "hide_card": false,
-      "background_color": "#2c3e50",
-      "background_image": "",
-      "background_position": "50% 50%",
-      "background_repeat": "no-repeat",
-      "background_size": "cover"
     }
-  })
+    
+  )
 
 
 
