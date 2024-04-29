@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Onenet Token Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #007bff;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        textarea,
+        input[type="date"],
+        select,
+        button {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        textarea[readonly] {
+            background-color: #f8f9fa;
+            color: #555;
+        }
+    </style>
+</head>
+
+
+<body>
+    <div class="container">
+        <h1>Onenet Token Generator</h1>
+        <div>
+            <label for="version">参数组版本号:</label>
+            <textarea readonly id="version" rows="1" cols="50">2018-10-31</textarea>
+        </div>
+        <div>
+            <label for="resourceName">访问资源:(产品ID 和 设备名)</label>
+            <textarea id="resourceName" rows="2" cols="50">products/xxxxxxxxxx/devices/xxxxxxxx</textarea>
+        </div>
+        <div>
+            <label for="expirationDate">访问过期时间:</label>
+            <input type="date" id="expirationDate" value="2035-12-01">
+        </div>
+        <div>
+            <label for="signatureMethod">签名方法:</label>
+            <select id="signatureMethod">
+                <option value="md5" selected>md5</option>
+                <option value="sha1">sha1</option>
+                <option value="sha256">sha256</option>
+            </select>
+        </div>
+        <div>
+            <label for="accessKey">设备密钥:</label>
+            <textarea id="accessKey" rows="3" cols="50">WktRWDRxxxxxxxxocDJ5dmcwNlhoTVo5WmFwSE5PQXU=</textarea>
+        </div>
+        <div>
+            <button onclick="generateToken()">Generate Token</button>
+        </div>
+        <div>
+            <label for="token">Token:</label>
+            <textarea id="token" rows="3" cols="50" readonly></textarea>
+        </div>
+        <div>
+            <label for="mqttInfo">MQTT Info:</label>
+            <textarea id="mqttInfo" rows="5" cols="50" readonly></textarea>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+    <script>
+        function generateToken() {
+            var version = document.getElementById("version").value;
+            var resourceName = document.getElementById("resourceName").value;
+            var expirationDate = document.getElementById("expirationDate").value;
+            var expirationTime = Date.parse(expirationDate) / 1000;
+            var signatureMethod = document.getElementById("signatureMethod").value.toLowerCase();
+            var accessKey = document.getElementById("accessKey").value;
+
+            var token = assembleToken(version, resourceName, expirationTime, signatureMethod, accessKey);
+            document.getElementById("token").value = token;
+
+            let mqttClientID = resourceName.split('/')[3];
+            let mqttUsername = resourceName.split('/')[1];
+            let mqttPassword = token;
+            var mqttInfo = "Host: mqtts.heclouds.com\nPort: 1883\nClient ID: " + mqttClientID + "\nUsername: " + mqttUsername + "\nPassword: " + mqttPassword;
+            document.getElementById("mqttInfo").value = mqttInfo;
+        }
+
+        function assembleToken(version, resourceName, expirationTime, signatureMethod, accessKey) {
+            var res = encodeURIComponent(resourceName);
+            var sig = encodeURIComponent(generatorSignature(version, resourceName, expirationTime, accessKey, signatureMethod));
+            var token = "version=" + version + "&res=" + res + "&et=" + expirationTime + "&method=" + signatureMethod + "&sign=" + sig;
+            return token;
+        }
+
+        function generatorSignature(version, resourceName, expirationTime, accessKey, signatureMethod) {
+            var encryptText = expirationTime + "\n" + signatureMethod + "\n" + resourceName + "\n" + version;
+            var key = CryptoJS.enc.Base64.parse(accessKey);
+            var hmac;
+            if (signatureMethod === "sha1") {
+                hmac = CryptoJS.HmacSHA1(encryptText, key);
+            } else if (signatureMethod === "sha256") {
+                hmac = CryptoJS.HmacSHA256(encryptText, key);
+            } else if (signatureMethod === "md5") {
+                hmac = CryptoJS.HmacMD5(encryptText, key);
+            } else {
+                throw new Error("Unsupported signature method");
+            }
+            var signature = hmac.toString(CryptoJS.enc.Base64);
+            return signature;
+        }
+    </script>
+</body>
+
+</html>
